@@ -128,14 +128,18 @@ func (e *Embed) SetAuthor(author Author) {
 	e.Author = author
 }
 
-// SetTimestamp validates and sets an ISO8601 timestamp for the embed
-func (e *Embed) SetTimestamp(timestamp string) error {
+// SetCustomTimestamp validates and sets an ISO8601 timestamp for the embed
+func (e *Embed) SetCustomTimestamp(timestamp string) error {
 	if isValidISO8601(timestamp) {
 		e.Timestamp = timestamp
 		return nil
 	}
-
 	return fmt.Errorf("timestamp is not ISO8601 timestamp")
+}
+
+// SetTimestamp sets current ISO8601 timestamp for the embed
+func (e *Embed) SetTimestamp() {
+	e.Timestamp = time.Now().Format(time.RFC3339)
 }
 
 // CreateWebhook creates a new Webhook with the specified content, username, and avatar URL
